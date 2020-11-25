@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Boolflix</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- Vue Js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- App Search -->
+      <div class="app-search">
+        <input type="text"
+        placeholder="Cerca un titolo"
+        v-model= "searchTitle"
+        @keyup.enter="search"
+        >
+
+        <select name="languages"
+        id="languages"
+        v-model="searchLanguages"
+        >
+        <option value="en">EN</option>
+        <option value="it">IT</option>
+        <option value="es">ES</option>
+        <option value="de">DE</option>
+        </select>
+        <button @click="search" type="button">Search</button>
+      </div>
+
+      <!-- Main content -->
+      <main class="main-content">
+        <!-- Movies -->
+        <div class="movies-content" v-show="movies.length > 0">
+          <h3>Movies</h3>
+          <ul class="movies-list">
+            <li class="movie" v-for="movie in movies">
+              <p>Title: {{ movie.title }}</p>
+              <p>Original title: {{ movie.original_title }}</p>
+              <p>Language:
+                <img :src="`./img/${movie.original_language}.png`" :alt="movie.original_language">
+              </p>
+              <div>
+                <span>Rated:
+                <i class="fas fa-star" v-for="vote in getValutation(movie.vote_average)"></i>
+                <i class="far fa-star" v-for="vote in (5 - getValutation(movie.vote_average))"></i>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Series -->
+        <div class="series-content"  v-show="series.length > 0">
+          <h3>Series</h3>
+          <ul class="series-list">
+            <li class="serie" v-for="serie in series">
+              <p>Name: {{ serie.name }}</p>
+              <p>Original name: {{ serie.original_name }}</p>
+              <p>Language:
+                <img :src="`./img/${serie.original_language}.png`" :alt="serie.original_language">
+              </p>
+              <div>
+                <span>Rated:
+                <i class="fas fa-star" v-for="vote in getValutation(serie.vote_average)"></i>
+                <i class="far fa-star" v-for="vote in (5 - getValutation(serie.vote_average))"></i>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </main>
+    </div>
+
+    <!-- Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Js -->
+    <script src="./js/main.js"></script>
+  </body>
+</html>

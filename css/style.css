@@ -1,0 +1,12 @@
+/* GENERAL */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+img {
+  max-width: 40px;
+}
