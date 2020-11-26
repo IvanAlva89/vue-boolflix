@@ -15,24 +15,18 @@
   <body>
     <div id="app">
       <!-- App Search -->
-      <div class="app-search">
-        <input type="text"
-        placeholder="Cerca un titolo"
-        v-model= "searchTitle"
-        @keyup.enter="search"
+      <header class="app-container">
+        <div class="app-logo">
+          <img src="./img/netflix-logo.png" alt="logo">
+        </div>
+        <div class="app-search">
+          <input type="text"
+          placeholder="Cerca un titolo"
+          v-model= "searchTitle"
+          @keyup.enter="search"
         >
-
-        <select name="languages"
-        id="languages"
-        v-model="searchLanguages"
-        >
-        <option value="en">EN</option>
-        <option value="it">IT</option>
-        <option value="es">ES</option>
-        <option value="de">DE</option>
-        </select>
-        <button @click="search" type="button">Search</button>
-      </div>
+        </div>
+      </header>
 
       <!-- Main content -->
       <main class="main-content">
@@ -41,16 +35,27 @@
           <h3>Movies</h3>
           <ul class="movies-list">
             <li class="movie" v-for="movie in movies">
-              <p>Title: {{ movie.title }}</p>
-              <p>Original title: {{ movie.original_title }}</p>
-              <p>Language:
-                <img :src="`./img/${movie.original_language}.png`" :alt="movie.original_language">
-              </p>
+              <div class="cover">
+                <img v-if="movie.poster_path"
+                    :src="coverContent(movie.poster_path)"
+                    :alt="movie.title"
+                >
+
+                <img v-else
+                src="https://www.altavod.com/assets/images/poster-placeholder.png" alt="no cover">
+
+              </div>
+              <p>{{ movie.title }}</p>
+              <p>{{ movie.original_title }}</p>
               <div>
-                <span>Rated:
                 <i class="fas fa-star" v-for="vote in getValutation(movie.vote_average)"></i>
                 <i class="far fa-star" v-for="vote in (5 - getValutation(movie.vote_average))"></i>
-                </span>
+              </div>
+              <div class="language">
+                <img :src="`./img/${movie.original_language}.png`" :alt="movie.original_language">
+              </div>
+              <div class="text" v-if="movie.overview">
+                <p> {{ movie.overview }}</p>
               </div>
             </li>
           </ul>
@@ -61,16 +66,21 @@
           <h3>Series</h3>
           <ul class="series-list">
             <li class="serie" v-for="serie in series">
-              <p>Name: {{ serie.name }}</p>
-              <p>Original name: {{ serie.original_name }}</p>
-              <p>Language:
-                <img :src="`./img/${serie.original_language}.png`" :alt="serie.original_language">
-              </p>
+              <div class="cover">
+                <img :src="coverContent(serie.poster_path)" :alt="serie.title">
+              </div>
+
+              <p>{{ serie.name }}</p>
+              <p>{{ serie.original_name }}</p>
               <div>
-                <span>Rated:
                 <i class="fas fa-star" v-for="vote in getValutation(serie.vote_average)"></i>
                 <i class="far fa-star" v-for="vote in (5 - getValutation(serie.vote_average))"></i>
-                </span>
+              </div>
+              <div class="language">
+                <img :src="`./img/${serie.original_language}.png`" :alt="serie.original_language">
+              </div>
+              <div class="text" v-if="serie.overview">
+                <p> {{ serie.overview }}</p>
               </div>
             </li>
           </ul>

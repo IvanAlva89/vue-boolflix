@@ -13,7 +13,7 @@ const app = new Vue ({
       this.searchTitle = ''
     },
     searchMovies() {
-      if (this.searchTitle) {
+      if (this.searchTitle.trim()) {
         axios.get('https://api.themoviedb.org/3/search/movie', {
           params: {
             api_key: '919d074e474dce1f45d121775aee20ee',
@@ -30,7 +30,7 @@ const app = new Vue ({
       }
     },
     searchSeries() {
-      if (this.searchTitle) {
+      if (this.searchTitle.trim()) {
         axios.get('https://api.themoviedb.org/3/search/tv', {
           params: {
             api_key: '919d074e474dce1f45d121775aee20ee',
@@ -49,5 +49,8 @@ const app = new Vue ({
     getValutation(vot) {
       return Math.ceil(vot / 2);
     },
+    coverContent(path) {
+      return `https://image.tmdb.org/t/p/w500/${path}`;
+    }
   }
 });
